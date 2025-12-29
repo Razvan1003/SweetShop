@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:15
+    container_name: sweetshop-db
+    environment:
+      POSTGRES_DB: sweetshop
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    ports:
+      - "5432:5432"
+    volumes:
+      - sweetshop-db-data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: sweetshop-backend
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/sweetshop
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+volumes:
+  sweetshop-db-data:
