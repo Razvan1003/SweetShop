@@ -7,9 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ProductPageController {
+
     private final ProductService productService;
 
     public ProductPageController(ProductService productService) {
@@ -17,14 +19,28 @@ public class ProductPageController {
     }
 
     @GetMapping("/product/{id}")
-    public String product(@PathVariable Long id, Model model) {
+    public String product(@PathVariable Long id,
+                          Model model,
+                          RedirectAttributes redirectAttributes) {
+
         ProductResponse product = productService.getById(id);
+        if (product == null) {
+            // Dacă vrei, poți arunca o excepție custom și să ai o pagină 404
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "Produsul căutat nu a fost găsit.");
+            return "redirect:/menu";
+        }
+
         model.addAttribute("product", product);
 
         AddToCartRequest addToCart = new AddToCartRequest();
         addToCart.setProductId(product.getId());
         addToCart.setQuantity(1);
         model.addAttribute("addToCart", addToCart);
+
+        // pentru link-ul „Înapoi la meniu” în product.html
+        model.addAttribute("backUrl", "/menu");
+
         return "product";
     }
 }

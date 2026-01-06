@@ -1,68 +1,147 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Produse</title>
+    <title>Administrare produse - SweetShop</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css" th:href="@{/css/styles.css}">
 </head>
-<body>
-<nav class="navbar navbar-light bg-light border-bottom">
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
-        <a class="navbar-brand" href="/">Sweet Shop</a>
-        <div class="d-flex gap-2 align-items-center">
-            <a class="btn btn-outline-secondary btn-sm" href="/cart" th:if="${isClient}">Cos (<span th:text="${cartCount}">0</span>)</a>
-            <a class="btn btn-outline-secondary btn-sm" href="/me/orders" th:if="${isClient}">Comenzi</a>
-            <a class="btn btn-outline-secondary btn-sm" href="/me/addresses" th:if="${isClient}">Adrese</a>
-            <a class="btn btn-outline-secondary btn-sm" href="/admin/products" th:if="${isAdmin}">Admin</a>
-            <a class="btn btn-outline-secondary btn-sm" href="/login" th:if="${!isAuthenticated}">Autentificare</a>
-            <a class="btn btn-outline-secondary btn-sm" href="/register" th:if="${!isAuthenticated}">Inregistrare</a>
-            <form th:if="${isAuthenticated}" method="post" action="/logout">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                <button class="btn btn-outline-secondary btn-sm" type="submit">Logout</button>
-            </form>
+        <a class="navbar-brand fw-bold" th:href="@{/}">
+            SweetShop
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#mainNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/menu}">Meniu</a>
+                </li>
+                <li class="nav-item" th:if="${isClient}">
+                    <a class="nav-link" th:href="@{/cart}">
+                        Coș (<span th:text="${cartCount}">0</span>)
+                    </a>
+                </li>
+                <li class="nav-item" th:if="${isClient}">
+                    <a class="nav-link" th:href="@{/me/orders}">Comenzi</a>
+                </li>
+                <li class="nav-item" th:if="${isClient}">
+                    <a class="nav-link" th:href="@{/me/addresses}">Adrese</a>
+                </li>
+                <li class="nav-item" th:if="${isAdmin}">
+                    <a class="nav-link active" th:href="@{/admin/products}">Admin</a>
+                </li>
+
+                <li class="nav-item" th:if="${!isAuthenticated}">
+                    <a class="btn btn-outline-secondary btn-sm ms-lg-2" th:href="@{/login}">Autentificare</a>
+                </li>
+                <li class="nav-item" th:if="${!isAuthenticated}">
+                    <a class="btn btn-primary btn-sm ms-lg-2" th:href="@{/register}">Înregistrare</a>
+                </li>
+
+                <li class="nav-item ms-lg-2" th:if="${isAuthenticated}">
+                    <form method="post" th:action="@{/logout}" class="d-inline">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <button class="btn btn-outline-secondary btn-sm" type="submit">Logout</button>
+                    </form>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
 
-<div class="container py-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="mb-0">Produse</h4>
-        <a class="btn btn-primary btn-sm" href="/admin/products/new">Adauga produs</a>
-    </div>
+<main class="py-5">
+    <div class="container">
 
-    <div class="table-responsive">
-        <table class="table table-bordered align-middle">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nume</th>
-                    <th>Categorie</th>
-                    <th>Pret</th>
-                    <th>Actiuni</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="product : ${products}">
-                    <td th:text="${product.id}">1</td>
-                    <td th:text="${product.name}">Name</td>
-                    <td th:text="${product.categoryName}">Category</td>
-                    <td th:text="${product.price} + ' RON'">0</td>
-                    <td>
-                        <a class="btn btn-outline-secondary btn-sm" th:href="@{/admin/products/{id}/edit(id=${product.id})}">Editeaza</a>
-                        <form class="d-inline" th:action="@{/admin/products/{id}/delete(id=${product.id})}" method="post">
-                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                            <button class="btn btn-outline-danger btn-sm" type="submit">Sterge</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr th:if="${#lists.isEmpty(products)}">
-                    <td colspan="5" class="text-muted">Nu exista produse.</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="h4 fw-bold mb-1">Administrare produse</h1>
+                <p class="text-muted small mb-0">
+                    Gestionează produsele afișate în meniul Sweet Shop.
+                </p>
+            </div>
+            <a class="btn btn-primary btn-sm" th:href="@{/admin/products/new}">
+                + Adaugă produs
+            </a>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-4 sweet-admin-card">
+            <div class="card-body p-0">
+
+                <div class="table-responsive">
+                    <table class="table mb-0 align-middle table-hover sweet-admin-table">
+                        <thead>
+                        <tr>
+                            <th class="text-center">ID</th>
+                            <th>Nume</th>
+                            <th>Categorie</th>
+                            <th class="text-end">Preț</th>
+                            <th class="text-center">Acțiuni</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="product : ${products}">
+                            <td class="text-center fw-semibold" th:text="${product.id}">1</td>
+                            <td>
+                                <span class="fw-semibold" th:text="${product.name}">Nume</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-soft-pink text-primary px-3 py-2"
+                                      th:text="${product.categoryName}">
+                                    Category
+                                </span>
+                            </td>
+                            <td class="text-end">
+                                <span class="fw-semibold text-primary">
+                                    <span th:text="${#numbers.formatDecimal(product.price, 1, 2)}">0.00</span> RON
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-outline-primary btn-sm me-1"
+                                   th:href="@{/admin/products/{id}/edit(id=${product.id})}">
+                                    Editează
+                                </a>
+                                <form class="d-inline"
+                                      th:action="@{/admin/products/{id}/delete(id=${product.id})}"
+                                      method="post"
+                                      onsubmit="return confirm('Sigur vrei să ștergi acest produs?');">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                    <button class="btn btn-outline-danger btn-sm" type="submit">
+                                        Șterge
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+
+                        <tr th:if="${#lists.isEmpty(products)}">
+                            <td colspan="5" class="text-center text-muted py-4">
+                                Nu există produse încă. Adaugă primul desert în meniu 🍩
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
     </div>
-</div>
+</main>
+
+<footer class="mt-auto py-4 bg-white border-top">
+    <div class="container text-center small text-muted">
+        &copy; <span th:text="${#temporals.createNow().year}">2026</span> SweetShop – Proiect universitar.
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

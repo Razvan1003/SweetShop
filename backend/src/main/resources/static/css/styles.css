@@ -1,8 +1,382 @@
-body {
-    background-color: #f8f9fa;
+/* ===========================
+   GOOGLE FONT + RESET
+=========================== */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+    height: 100%;
+}
+
+/* ===========================
+   GLOBAL CANDY THEME
+=========================== */
+body {
+    background: linear-gradient(180deg, #fff1fa, #ffe3f7, #fff8fb);
+    min-height: 100vh;
+    height: 100%;
+    font-family: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: #4b4b4b;
+    margin: 0;
+
+    /* pentru footer lipit jos */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Paletă:
+   Pink   #ff4fa4
+   Candy  #ff7ac4
+   Peach  #ffb3c6
+   Cream  #fff3fa
+   Mint   #9ef7d3
+*/
+
+/* Titluri un pic mai rotunjite ca aspect */
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4 {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+/* ===========================
+   NAVBAR
+=========================== */
+.navbar {
+    background: linear-gradient(90deg, #ff9bd2, #ff7ac4, #ff4fa4) !important;
+    border-bottom: none !important;
+    box-shadow: 0 8px 30px rgba(255, 105, 180, 0.25);
+}
+
+.navbar-brand {
+    color: #ffffff !important;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 3px rgba(255, 0, 120, 0.4);
+}
+
+.navbar-nav .nav-link {
+    color: #ffeef8 !important;
+    font-weight: 500;
+    position: relative;
+    padding-inline: 0.9rem;
+    transition: color 0.2s ease, background-color 0.2s ease;
+    border-radius: 999px;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff !important;
+}
+
+/* Active state pentru tabul curent */
+.navbar-nav .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.22);
+    color: #ffffff !important;
+}
+
+/* Butoanele din navbar să fie mai contrastante pe gradient */
+.navbar .btn-primary {
+    background: #ffffff;
+    color: #ff3c9b;
+    border: none;
+}
+
+.navbar .btn-primary:hover {
+    background: #ffe3f7;
+    color: #ff0077;
+}
+
+.navbar .btn-outline-secondary {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+.navbar .btn-outline-secondary:hover {
+    background: #ffffff;
+    color: #ff3c9b;
+}
+
+/* ===========================
+   CARDS
+=========================== */
+.card {
+    border-radius: 22px !important;
+    border: none !important;
+    background: linear-gradient(180deg, #ffffff, #fff5fb);
+    box-shadow: 0 10px 30px rgba(255, 90, 150, 0.15);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(255, 80, 150, 0.25);
+}
+
+/* Carduri „mutate” să nu facă să sară layout-ul (opțional) */
+.card-body {
+    padding: 1.5rem 1.6rem;
+}
+
+/* ===========================
+   PRODUCT CARDS
+=========================== */
+.sweet-product-card {
+    border-radius: 22px !important;
+}
+
+.sweet-product-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 18px 50px rgba(255, 60, 140, 0.3);
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+.btn {
+    border-radius: 50px !important;
+    font-weight: 600;
+    padding-inline: 1.25rem;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #ff7ac4, #ff4fa4);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(90deg, #ff4fa4, #ff0077);
+}
+
+.btn-outline-primary {
+    border-color: #ff4fa4;
+    color: #ff4fa4;
+}
+
+.btn-outline-primary:hover {
+    background: #ff4fa4;
+    color: #ffffff;
+}
+
+/* Versiune „muted” pentru linkuri tip buton */
+.btn-link {
+    color: #ff4fa4;
+    text-decoration: none;
+}
+.btn-link:hover {
+    color: #ff0077;
+    text-decoration: underline;
+}
+
+/* Mic polish pentru butoanele mici din tabele (Admin / Coș etc.) */
+.table .btn-sm {
+    border-radius: 999px !important;
+    padding-inline: 1.1rem;
+    font-size: 0.8rem;
+}
+
+/* ===========================
+   HERO CANDY FLOAT
+=========================== */
+.sweet-hero-illustration {
+    animation: candyFloat 4s ease-in-out infinite;
+}
+
+@keyframes candyFloat {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(1deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* ===========================
+   TABLES (incl. Admin produse)
+=========================== */
+.table {
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+/* header mai clar */
+.table thead {
+    background: #ffbee6;
+}
+
+.table thead th {
+    border-bottom: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #7a1d4f;
+}
+
+/* aliniere celule */
 .table td,
 .table th {
     vertical-align: middle;
+}
+
+/* Mai mult spațiu vertical în celule */
+.table > :not(caption) > * > * {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+/* zebra rows + hover pentru vibe de dashboard */
+.table tbody tr:nth-child(even) {
+    background-color: #fff7fc;
+}
+
+.table tbody tr:hover {
+    background-color: #ffe3f7;
+}
+
+/* prima și ultima celulă cu colțuri ușor rotunjite (unde se poate) */
+.table tbody tr:first-child td:first-child {
+    border-top-left-radius: 14px;
+}
+.table tbody tr:first-child td:last-child {
+    border-top-right-radius: 14px;
+}
+.table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 14px;
+}
+.table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 14px;
+}
+
+/* ===========================
+   FORMS
+=========================== */
+.form-control,
+.form-select {
+    border-radius: 14px !important;
+    border: 2px solid #ffd0eb;
+    background-color: #ffffff;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #ff7ac4;
+    box-shadow: 0 0 8px rgba(255, 90, 150, 0.5);
+}
+
+/* Placeholder puțin mai discret */
+::placeholder {
+    color: #c599b4;
+}
+
+/* ===========================
+   BADGES
+=========================== */
+.badge {
+    border-radius: 50px !important;
+    font-weight: 500;
+}
+
+/* Culori mai „candy” pentru statusuri */
+.badge.bg-primary {
+    background-color: #ff7ac4 !important;
+}
+.badge.bg-success {
+    background-color: #9ef7d3 !important;
+    color: #116047 !important;
+}
+.badge.bg-danger {
+    background-color: #ff4f7b !important;
+}
+
+/* ===========================
+   ALERTS
+=========================== */
+.alert {
+    border-radius: 18px;
+    border: none;
+    background: linear-gradient(180deg, #ffe3f7, #fff5fb);
+    color: #5e3250;
+}
+
+/* ===========================
+   FOOTER (sticky jos)
+=========================== */
+footer {
+    background: linear-gradient(90deg, #ffbee6, #ff9bd2);
+    color: #7a1d4f;
+    text-align: center;
+    padding: 0.9rem 0;
+    box-shadow: 0 -4px 16px rgba(255, 130, 180, 0.25);
+
+    /* cheie ca să stea lipit de partea de jos în layoutul flex */
+    margin-top: auto;
+}
+
+/* ===========================
+   UTILITARE SECȚIUNI
+=========================== */
+.sweet-section {
+    padding-block: 3rem;
+}
+
+.sweet-section-title {
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+/* ===========================
+   TEXT & CULOARE
+=========================== */
+/* Candy glow pentru prețuri & accent */
+.text-primary {
+    color: #ff2c90 !important;
+}
+
+/* Linkuri standard */
+a {
+    color: #ff4fa4;
+}
+a:hover {
+    color: #ff0077;
+}
+
+/* ===========================
+   MISC (ex. pagini goale mari)
+=========================== */
+.min-vh-75 {
+    min-height: 75vh;
+}
+
+/* Fix badge livrare rapida in colt dreapta jos */
+.sweet-fast-badge {
+    transform: translate(20%, 40%);
+}
+
+/* ===========================
+   PAGE TITLES – CENTER STYLE
+=========================== */
+.page-title,
+h1.page-title,
+h2.page-title {
+    text-align: center;
+    width: 100%;
+    display: block;
+}
+
+/* subtitlurile descriere (cele gri mici sub titlu) */
+.page-subtitle {
+    text-align: center;
+    display: block;
+    color: #6f6f6f;
+    max-width: 700px;
+    margin-inline: auto;
 }
