@@ -42,7 +42,8 @@ Pachete:
 3) Se plaseaza comanda, apoi se poate vizualiza la /me/orders.
 
 ## UI (Thymeleaf)
-- `GET /` catalog produse (search + filtru categorie)
+- `GET /` pagina principala
+- `GET /menu` catalog produse (search + filtru categorie)
 - `GET /product/{id}` detalii produs + add to cart
 - `GET/POST /login`, `GET/POST /register`
 - `GET /cart` cos
@@ -77,7 +78,7 @@ Body `POST /api/orders`: `productId`, `quantity`, `addressId`
 
 ## Rulare cu Docker
 ```bash
-docker-compose -f docker/docker-compose.yml --env-file docker/.env up --build
+docker compose --env-file docker-compose-sweetshop/.env -f docker-compose-sweetshop/docker-compose.yml up --build
 ```
 
 Acces:
@@ -93,7 +94,7 @@ Aplicatia foloseste variabile de mediu:
 
 Deployment pe VM:
 - instaleaza Docker + Docker Compose
-- seteaza valorile din `.env`
+- seteaza valorile din `docker-compose-sweetshop/.env`
 - ruleaza comanda Docker de mai sus
 - expune portul 8080
 
@@ -103,7 +104,7 @@ backend/
   src/main/java/com/sweetshop/...
   src/main/resources/...
 
-docker/
+docker-compose-sweetshop/
   Dockerfile
   docker-compose.yml
   .env
